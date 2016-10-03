@@ -12,10 +12,14 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var ud:UserDefaults!
 
+    var name = ["sample.png"]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        ud = UserDefaults()
         return true
     }
 
@@ -39,6 +43,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func load(key:String) {
+        if key == "name" {
+            name = ud.object(forKey: key) as! [String]
+        }
+    }
+    
+    func save(object:AnyObject, key:String) {
+        ud.setValue(object, forKeyPath: key)
     }
 
 
