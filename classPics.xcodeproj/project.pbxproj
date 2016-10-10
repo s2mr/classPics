@@ -10,6 +10,8 @@
 		200620C21DA536A4008E2207 /* CustomModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200620C11DA536A4008E2207 /* CustomModal.swift */; };
 		200620C41DA53FAB008E2207 /* PopupSubjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200620C31DA53FAB008E2207 /* PopupSubjectViewController.swift */; };
 		200620C61DAA0C3D008E2207 /* MovePhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200620C51DAA0C3D008E2207 /* MovePhotosViewController.swift */; };
+		2060F4251DABBADD00AE4AC2 /* EasyImagy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2060F41C1DABBAD200AE4AC2 /* EasyImagy.framework */; };
+		2060F4261DABBADD00AE4AC2 /* EasyImagy.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2060F41C1DABBAD200AE4AC2 /* EasyImagy.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		20CC79DD1DA27BE9001416DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CC79DC1DA27BE9001416DB /* AppDelegate.swift */; };
 		20CC79DF1DA27BE9001416DB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CC79DE1DA27BE9001416DB /* ViewController.swift */; };
 		20CC79E21DA27BE9001416DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20CC79E01DA27BE9001416DB /* Main.storyboard */; };
@@ -21,10 +23,70 @@
 		4B3FE83B8E2DCC4DC31F236B /* Pods_classPics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A17FC1489F592AABD7EF3 /* Pods_classPics.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2060F41B1DABBAD200AE4AC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2060F4131DABBAD100AE4AC2 /* EasyImagy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D65FF0711AFB66C7006CC985;
+			remoteInfo = "EasyImagy-iOS";
+		};
+		2060F41D1DABBAD200AE4AC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2060F4131DABBAD100AE4AC2 /* EasyImagy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D69C33A61C8D3D2A007985D4;
+			remoteInfo = "EasyImagy-OSX";
+		};
+		2060F41F1DABBAD200AE4AC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2060F4131DABBAD100AE4AC2 /* EasyImagy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D65FF07C1AFB66C7006CC985;
+			remoteInfo = "EasyImagy-iOS Tests";
+		};
+		2060F4211DABBAD200AE4AC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2060F4131DABBAD100AE4AC2 /* EasyImagy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D69C33AF1C8D3D2A007985D4;
+			remoteInfo = "EasyImagy-OSX Tests";
+		};
+		2060F4231DABBAD200AE4AC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2060F4131DABBAD100AE4AC2 /* EasyImagy.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D6C2EDF81B031A0900E2B876;
+			remoteInfo = EasyImagySample;
+		};
+		2060F4271DABBADD00AE4AC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2060F4131DABBAD100AE4AC2 /* EasyImagy.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D65FF0701AFB66C7006CC985;
+			remoteInfo = "EasyImagy-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2060F4291DABBADD00AE4AC2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2060F4261DABBADD00AE4AC2 /* EasyImagy.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		200620C11DA536A4008E2207 /* CustomModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModal.swift; sourceTree = "<group>"; };
 		200620C31DA53FAB008E2207 /* PopupSubjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupSubjectViewController.swift; sourceTree = "<group>"; };
 		200620C51DAA0C3D008E2207 /* MovePhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovePhotosViewController.swift; sourceTree = "<group>"; };
+		2060F4131DABBAD100AE4AC2 /* EasyImagy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EasyImagy.xcodeproj; path = "../../../../Downloads/EasyImagy-swift-3/EasyImagy.xcodeproj"; sourceTree = "<group>"; };
 		20CC79D91DA27BE9001416DB /* classPics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = classPics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20CC79DC1DA27BE9001416DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20CC79DE1DA27BE9001416DB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2060F4251DABBADD00AE4AC2 /* EasyImagy.framework in Frameworks */,
 				4B3FE83B8E2DCC4DC31F236B /* Pods_classPics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,9 +115,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2060F4141DABBAD100AE4AC2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2060F41C1DABBAD200AE4AC2 /* EasyImagy.framework */,
+				2060F41E1DABBAD200AE4AC2 /* EasyImagy.framework */,
+				2060F4201DABBAD200AE4AC2 /* EasyImagyTests.xctest */,
+				2060F4221DABBAD200AE4AC2 /* EasyImagyTests.xctest */,
+				2060F4241DABBAD200AE4AC2 /* EasyImagySample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		20CC79D01DA27BE8001416DB = {
 			isa = PBXGroup;
 			children = (
+				2060F4131DABBAD100AE4AC2 /* EasyImagy.xcodeproj */,
 				20CC79DB1DA27BE9001416DB /* classPics */,
 				20CC79DA1DA27BE9001416DB /* Products */,
 				4E913C9A28C7D6E8B0F20D60 /* Pods */,
@@ -119,10 +195,12 @@
 				20CC79D71DA27BE9001416DB /* Resources */,
 				9DF142035616E5C039821DA1 /* [CP] Embed Pods Frameworks */,
 				2C8E0E8E3AFCB027BA7DBE2D /* [CP] Copy Pods Resources */,
+				2060F4291DABBADD00AE4AC2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2060F4281DABBADD00AE4AC2 /* PBXTargetDependency */,
 			);
 			name = classPics;
 			productName = classPics;
@@ -158,12 +236,56 @@
 			mainGroup = 20CC79D01DA27BE8001416DB;
 			productRefGroup = 20CC79DA1DA27BE9001416DB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2060F4141DABBAD100AE4AC2 /* Products */;
+					ProjectRef = 2060F4131DABBAD100AE4AC2 /* EasyImagy.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				20CC79D81DA27BE9001416DB /* classPics */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		2060F41C1DABBAD200AE4AC2 /* EasyImagy.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EasyImagy.framework;
+			remoteRef = 2060F41B1DABBAD200AE4AC2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2060F41E1DABBAD200AE4AC2 /* EasyImagy.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = EasyImagy.framework;
+			remoteRef = 2060F41D1DABBAD200AE4AC2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2060F4201DABBAD200AE4AC2 /* EasyImagyTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = EasyImagyTests.xctest;
+			remoteRef = 2060F41F1DABBAD200AE4AC2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2060F4221DABBAD200AE4AC2 /* EasyImagyTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = EasyImagyTests.xctest;
+			remoteRef = 2060F4211DABBAD200AE4AC2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2060F4241DABBAD200AE4AC2 /* EasyImagySample.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = EasyImagySample.app;
+			remoteRef = 2060F4231DABBAD200AE4AC2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		20CC79D71DA27BE9001416DB /* Resources */ = {
@@ -243,6 +365,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2060F4281DABBADD00AE4AC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "EasyImagy-iOS";
+			targetProxy = 2060F4271DABBADD00AE4AC2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		20CC79E01DA27BE9001416DB /* Main.storyboard */ = {
@@ -363,6 +493,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E2CE76AA678154B6BC570EAB /* Pods-classPics.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = TKM4VSA3YF;
 				INFOPLIST_FILE = classPics/Info.plist;
@@ -377,6 +508,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4475205349B947DA579091A /* Pods-classPics.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = TKM4VSA3YF;
 				INFOPLIST_FILE = classPics/Info.plist;

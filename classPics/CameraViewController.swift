@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 import CoreMotion
-//import EasyImagy
+import EasyImagy
 
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, UIGestureRecognizerDelegate  {
     
@@ -296,41 +296,52 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         let fileName = formatter.string(from: date)
         let filePath = path + fileName
         
-        var imageToSave:UIImage
         
-        if quaternion.z > 0.35{
-            //landscapeRight
-            //そのまま
-            imageToSave = UIImage(cgImage: imageView.image as! CGImage, scale: (imageView.image?.scale)!, orientation: .up)
-        }else if quaternion.z < -0.25{
-            //landscapeLeft
-            //180度回転
-            imageToSave =  UIImage(cgImage: (imageView.image?.cgImage)!, scale: (imageView.image?.scale)!, orientation: .down)
-        }else if quaternion.z > 0.60{
-            //upsidedown
-            //左に90度回転
-            imageToSave =  UIImage(cgImage: imageView.image as! CGImage, scale: (imageView.image?.scale)!, orientation: .right)
+        DispatchQueue.global().async {
+            let beforeImage = Image<RGBA>(uiImage: self.imageView.image!)
+            var imageToSave:UIImage
 
-        }else {
-            //portrait
-            //右に90度回転
-            imageToSave =  UIImage(cgImage: (imageView.image?.cgImage)!, scale: (imageView.image?.scale)!, orientation:.left)
-
+            
+            if self.quaternion.z > 0.35{
+                //landscapeRight
+                //そのまま
+                
+                imageToSave = (beforeImage?.uiImage)!
+            }else if self.quaternion.z < -0.25{
+                //landscapeLeft
+                //180度回転
+                imageToSave = beforeImage!.rotate(2).uiImage
+            }else if self.quaternion.z > 0.60{
+                //upsidedown
+                //左に90度回転
+                imageToSave =  beforeImage!.rotate(-1).uiImage
+            }else {
+                //portrait
+                //右に90度回転
+                imageToSave =  beforeImage!.rotate(1).uiImage
+                
+            }
+            let data = UIImagePNGRepresentation(imageToSave)
+            
+            
+            
+            try! data?.write(to: URL(fileURLWithPath: filePath))
+            
+            if self.subjectName == "" || self.subjectName == "未分類"{
+                self.ad.name[fileName] = "未分類"
+            }else{
+                self.ad.name[fileName] = "subjectName"
+            }
+            
+            self.ad.save(object: self.ad.name as AnyObject, key: "PHOTOINFO")
         }
         
-        let data = UIImagePNGRepresentation(imageToSave)
         
+
         
+
         
-        try! data?.write(to: URL(fileURLWithPath: filePath))
-        
-        if subjectName == "" || subjectName == "未分類"{
-            ad.name[fileName] = "未分類"
-        }else{
-            ad.name[fileName] = "subjectName"
-        }
-        
-        ad.save(object: ad.name as AnyObject, key: "PHOTOINFO")
+
         
     }
     
