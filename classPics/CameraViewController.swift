@@ -8,17 +8,63 @@
 
 import UIKit
 import AVFoundation
+import CoreMotion
+//import EasyImagy
 
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, UIGestureRecognizerDelegate  {
+    
+    let motionManager: CMMotionManager = CMMotionManager()
+    var quaternion: CMQuaternion!
+
     
     var input:AVCaptureDeviceInput!
     var output:AVCaptureVideoDataOutput!
     var session:AVCaptureSession!
     var camera:AVCaptureDevice!
     var imageView:UIImageView!
+    var attrText: NSMutableAttributedString!
+    var label:UILabel!
+    
+    let ad = UIApplication.shared.delegate as! AppDelegate
+    var subjectName = "未分類"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        motionManager.deviceMotionUpdateInterval = 0.05 // 20Hz
+        
+        motionManager.startDeviceMotionUpdates( to: OperationQueue.current!, withHandler:{
+            deviceManager, error in
+            let attitude: CMAttitude = deviceManager!.attitude
+            
+            self.quaternion = attitude.quaternion
+            print(self.quaternion.z)
+            
+        })
+        
+        attrText = NSMutableAttributedString()
+        
+        attrText.mutableString.setString("未分類\n▼")
+        
+        // 1行目 14
+        attrText.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 17)], range: NSMakeRange(0, 3))
+        // 2行目 10
+        attrText.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 10)], range: NSMakeRange(4, 1))
+        
+//        self.label.attributedText = attrText
+        
+        label = UILabel(frame: CGRect(x: 0, y: 0, width: 480, height: 44))
+        label.numberOfLines = 2
+//        label.text = "未分類\n🔻"
+        label.textAlignment = .center
+        label.attributedText = attrText
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped(tapGestureRecognizer:)))
+        label.addGestureRecognizer(gestureRecognizer)
+        label.isUserInteractionEnabled = true
+
+        
+        navigationItem.titleView = label
         
         // 画面タップでピントをあわせる
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen))
@@ -56,6 +102,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         shutterShadowView.isUserInteractionEnabled = false
         shutterButton.addSubview(shutterShadowView)
         
+        /*
         let closeButton = UIButton()
         closeButton.setTitle("閉じる", for: .normal)
         closeButton.setTitleColor(UIColor.white, for: .normal)
@@ -63,18 +110,36 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         closeButton.center = CGPoint(x: (underView.frame.size.width+shutterButton.center.x+shutterButton.frame.size.width/2)/2, y: underView.frame.size.height/2)
         closeButton.addTarget(self, action: #selector(tapedCloseButton), for: .touchUpInside)
         underView.addSubview(closeButton)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
+ */
+        
         // スクリーン設定
         setupDisplay()
         
         // カメラの設定
         setupCamera()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        let string = "\(subjectName)\n▼"
+        
+        attrText.mutableString.setString(string)
+        
+        
+        
+        attrText.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 17)], range: NSMakeRange(0, string.characters.count))
+        attrText.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 10)], range: NSMakeRange(string.characters.count-1, 1))
+        label.attributedText = attrText
+        navigationItem.titleView = label
+        
+        print("Subject Name is : \(subjectName)")
     }
     
     // メモリ解放
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         // camera stop メモリ解放
         session.stopRunning()
         
@@ -88,6 +153,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         
         session = nil
         camera = nil
+        
+        subjectName = ""
     }
     
     func setupDisplay(){
@@ -221,13 +288,49 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
 //            UIImageWriteToSavedPhotosAlbum(self.imageView.image!, self, nil, nil)
 //        }
         
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd-hh:mm:ss"
+        
         let path = NSHomeDirectory() + "/Library/"
-        let fileName = "sample.png"
+        let fileName = formatter.string(from: date)
         let filePath = path + fileName
         
-        let data = UIImagePNGRepresentation(imageView.image!)
+        var imageToSave:UIImage
+        
+        if quaternion.z > 0.35{
+            //landscapeRight
+            //そのまま
+            imageToSave = UIImage(cgImage: imageView.image as! CGImage, scale: (imageView.image?.scale)!, orientation: .up)
+        }else if quaternion.z < -0.25{
+            //landscapeLeft
+            //180度回転
+            imageToSave =  UIImage(cgImage: (imageView.image?.cgImage)!, scale: (imageView.image?.scale)!, orientation: .down)
+        }else if quaternion.z > 0.60{
+            //upsidedown
+            //左に90度回転
+            imageToSave =  UIImage(cgImage: imageView.image as! CGImage, scale: (imageView.image?.scale)!, orientation: .right)
+
+        }else {
+            //portrait
+            //右に90度回転
+            imageToSave =  UIImage(cgImage: (imageView.image?.cgImage)!, scale: (imageView.image?.scale)!, orientation:.left)
+
+        }
+        
+        let data = UIImagePNGRepresentation(imageToSave)
+        
+        
         
         try! data?.write(to: URL(fileURLWithPath: filePath))
+        
+        if subjectName == "" || subjectName == "未分類"{
+            ad.name[fileName] = "未分類"
+        }else{
+            ad.name[fileName] = "subjectName"
+        }
+        
+        ad.save(object: ad.name as AnyObject, key: "PHOTOINFO")
         
     }
     
@@ -332,8 +435,58 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
 
     }
     
+    func tapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        print("tapped.")
+        
+        if attrText.string == "未分類\n▲" {
+        attrText.mutableString.setString("未分類\n▼")
+        attrText.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 17)], range: NSMakeRange(0, 3))
+        attrText.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 10)], range: NSMakeRange(4, 1))
+        label.attributedText = attrText
+        navigationItem.titleView = label
+            
+            
+
+ 
+//            let modalViewController = PopupSubjectViewController()
+//            modalViewController.modalPresentationStyle = .custom
+//            modalViewController.transitioningDelegate = self
+//            present(modalViewController, animated: true, completion: nil)
+            
+        }else {
+            attrText.mutableString.setString("未分類\n▲")
+            attrText.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 17)], range: NSMakeRange(0, 3))
+            attrText.addAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 10)], range: NSMakeRange(4, 1))
+            label.attributedText = attrText
+            navigationItem.titleView = label
+            
+            // 新しい View Controller をモーダル表示する
+            let controller = self.storyboard!.instantiateViewController(withIdentifier: "PopupSubjectViewController")
+            controller.modalPresentationStyle = .custom
+            controller.transitioningDelegate = self
+            self.present(controller, animated: true, completion: {
+            })
+        }
+        
+    }
+    
+    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
+        return CustomModal(presentedViewController: presented, presenting: presenting)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+}
+
+extension CameraViewController: UIViewControllerTransitioningDelegate {
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return CustomPresentationController(presentedViewController: presented, presenting: presenting)
+
     }
 }

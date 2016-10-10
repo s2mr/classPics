@@ -15,7 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var ud:UserDefaults!
 
-    var name = ["sample.png"]
+    var name = ["":""]
+    var subjectName = ["未分類"]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -45,9 +46,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func load(key:String) {
-        if key == "name" {
-            name = ud.object(forKey: key) as! [String]
+    func load(key:String){
+        
+        let object = ud.object(forKey: key)
+        if object != nil {
+            if key == "PHOTOINFO" {
+                name = object as! [String:String]
+            }
         }
     }
     

@@ -10,9 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let ad = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
-        super.viewDidLoad()      
-        
+        super.viewDidLoad()
+        ad.load(key: "PHOTOINFO")
         // Do any additional setup after loading the view, typically from a nib.
     }
 
